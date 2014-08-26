@@ -467,6 +467,16 @@ class DMGUnpacker(UnpackerBase):
         UnpackerBase.cleanup(self, dst)
 
 
+@register_unpacker
+class LzmaUnpacker(Unpacker):
+    id = 'lzma'
+    name = 'Uncompressed Lzma'
+    filename_patterns = ['*.tar.lzma']
+    executable = 'tar'
+    args = ['--lzma', '-xf', FILENAME]
+    stream_processor = tar_stream_processor
+    mimetypes = ['application/lzma']
+
 if sys.platform == 'darwin':
     register_unpacker(DMGUnpacker)
 
